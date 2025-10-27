@@ -1,486 +1,706 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEAVN 粘性时间线动画复刻</title>
+    <title>HEAVN One - The World's Brightest Desk Luminaire</title>
     <style>
-        /* -------------------------
-         * 1. 全局和基础设置
-         * ------------------------- */
-        :root {
-            --brand-yellow: #ffdc2e;
-            --dark-bg: #111111;
-            --light-text: #ffffff;
-            --dark-text: #000000;
-            --light-bg: #f5f5f5; /* 整个页面的浅色背景 */
-        }
-
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--light-bg);
-            color: var(--dark-text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow-x: hidden;
         }
 
-        /* 辅助容器（用于演示Slogan部分） */
-        .full-screen-section {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            min-height: 100vh; /* 占满一个屏幕高度 */
-            padding: 40px;
-        }
-        
-        #slogan-section {
-            background-color: var(--brand-yellow);
-        }
-
-        #slogan-section h1 {
-            font-size: 5rem;
-            font-weight: 600;
-            line-height: 1.1;
-        }
-
-        #slogan-section p {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin-top: 24px;
-            line-height: 1.6;
-        }
-        
-        /* -------------------------
-         * 2. 时间线动画版面 (核心)
-         * ------------------------- */
-        
-        /* * 这是整个动画部分的总容器.
-         * 它使用 flex 布局来创建左右两栏。
-        */
-        .timeline-section {
-            display: flex;
-            position: relative;
-        }
-
-        /* * 2.1 左侧粘性面板
-         * * 这是实现效果的第一个关键: `position: sticky`
-         * 它会“粘”在屏幕顶部 (top: 0)，
-         * 当它的父容器 (.timeline-section) 还在屏幕上时。
-        */
-        .timeline-sticky-left {
-            flex: 1; /* 占据左侧 50% 宽度 */
-            height: 100vh; /* 占据 100% 的屏幕高度 */
-            position: sticky;
+        /* Header */
+        .header {
+            position: fixed;
             top: 0;
-            
-            /* 布局和背景 */
-            background-color: white; /* 初始背景色为白色 */
+            left: 0;
+            right: 0;
+            z-index: 1000;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            overflow: hidden; /* 隐藏溢出的内容 */
-            
-            /* 背景色切换动画 */
-            transition: background-color 0.5s ease;
+            padding: 30px 40px;
+            transition: color 0.3s ease;
         }
 
-        /* 当左侧面板需要变暗时，JS会添加这个 .is-dark 类 */
-        .timeline-sticky-left.is-dark {
-            background-color: var(--dark-bg);
-            color: var(--light-text); /* 内部文字变为浅色 */
+        .header.light {
+            color: #1a1a1a;
         }
 
-        /* * 2.2 左侧内容容器 (所有视觉元素) 
-         *
-         * 所有的图像、时钟都放在这里。
-         * 它们通过 `position: absolute` 完美地堆叠在一起。
-        */
-        .timeline-visual {
-            position: absolute;
+        .header.dark {
+            color: white;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 3px;
+        }
+
+        .order-btn {
+            padding: 12px 28px;
+            border-radius: 25px;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header.dark .order-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        .header.light .order-btn {
+            background: rgba(0, 0, 0, 0.08);
+            color: #1a1a1a;
+        }
+
+        .order-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Section base */
+        section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Section 1 - Hero */
+        .section-1 {
+            background: #0a0a0a;
+            color: white;
+        }
+
+        .hero-content {
+            display: flex;
             width: 100%;
+            height: 100vh;
+            align-items: center;
+        }
+
+        .hero-image {
+            flex: 1;
             height: 100%;
+            background: #333;
+        }
+
+        .hero-text {
+            flex: 1;
+            text-align: center;
+            padding: 0 60px;
+        }
+
+        .hero-title {
+            font-size: 120px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            line-height: 1;
+        }
+
+        .hero-title-small {
+            font-size: 60px;
+            font-weight: 300;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+        }
+
+        .hero-cta {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .product-thumbnail {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 180px;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            z-index: 999;
+        }
+
+        .thumbnail-label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Section 2 - Description */
+        .section-2 {
+            background: #0a0a0a;
+            color: white;
+        }
+
+        .section-2-content {
+            max-width: 700px;
+            text-align: center;
+            padding: 0 40px;
+        }
+
+        .section-2-title {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .section-2-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
+        /* Section 3 - Yellow Circle */
+        .section-3 {
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .yellow-circle {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #FDB913;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0;
+        }
+
+        .yellow-circle.expand {
+            animation: expandCircle 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes expandCircle {
+            0% {
+                width: 60px;
+                height: 60px;
+                opacity: 1;
+            }
+            100% {
+                width: 300vmax;
+                height: 300vmax;
+                opacity: 1;
+            }
+        }
+
+        .yellow-circle.shrink {
+            animation: shrinkAndDrop 1.5s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes shrinkAndDrop {
+            0% {
+                width: 300vmax;
+                height: 300vmax;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            50% {
+                width: 60px;
+                height: 60px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            100% {
+                width: 60px;
+                height: 60px;
+                top: calc(100vh + 120px);
+                left: 70%;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .section-3-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 40px;
+        }
+
+        .section-3-title {
+            font-size: 90px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+        }
+
+        .circle-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: #ddd;
+            display: inline-block;
+            margin: 0 20px;
+            vertical-align: middle;
+        }
+
+        .section-3-description {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #1a1a1a;
+        }
+
+        /* Section 4 - Timeline */
+        .section-4 {
+            background: #f5f5f5;
+            min-height: 100vh;
+            transition: background 0.6s ease;
+        }
+
+        .section-4.dark {
+            background: #1a1a1a;
+        }
+
+        .timeline-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+        }
+
+        .timeline-left {
+            flex: 1;
+            height: 100vh;
+            position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            
-            /* * 这是动画的第二个关键: `opacity` 和 `transition`
-             * 默认所有视觉元素都是透明的 (opacity: 0)
-            */
+        }
+
+        .timeline-image {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
             opacity: 0;
             transition: opacity 0.5s ease;
         }
 
-        /* * JS 会给当前应该显示的那个视觉元素添加 .active 类
-         * .active 类使其不透明 (opacity: 1)
-        */
-        .timeline-visual.active {
+        .timeline-image.active {
             opacity: 1;
         }
-        
-        /* 左侧的图像占位符 (模拟视频中的图像) */
-        .timeline-visual .image-placeholder {
-            width: 80%;
-            height: 60%;
-            background-color: #eee;
-            border: 2px dashed #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            color: #666;
-            border-radius: 8px;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        /* 变暗时的图像占位符 */
-        .is-dark .timeline-visual .image-placeholder {
-             background-color: #333;
-             border-color: #555;
-             color: #999;
-        }
 
-
-        /* * 2.3 时间线轨道 (垂直的线)
-         *
-         * 这就是视频中左侧的垂直线。
-         * `calc(100% - 200px)` 让它有上下的边距。
-        */
-        .timeline-track {
-            position: absolute;
-            left: 40px; /* 距离左边缘 40px */
-            top: 100px; /* 距离顶部 100px */
-            height: calc(100% - 200px); /* 总高度减去上下边距 */
-            width: 3px;
-            background-color: #ddd;
-            border-radius: 2px;
-        }
-        
-        /* 暗模式下的轨道 */
-        .is-dark .timeline-track {
-            background-color: #444;
-        }
-
-        /* * 2.4 移动的黄色圆点
-         *
-         * 这就是那个黄色的圆点。
-         * 它在轨道 (.timeline-track) 内部绝对定位。
-         * 它的 `top` 属性将由 JavaScript 动态改变。
-        */
-        .timeline-dot {
-            position: absolute;
-            left: 50%; /* 在轨道的中心 */
-            transform: translateX(-50%); /* 水平居中 */
-            width: 24px;
-            height: 24px;
-            background-color: var(--brand-yellow);
-            border-radius: 50%;
-            
-            /* 圆点移动动画 */
-            transition: top 0.4s ease-out;
-            
-            /* 初始位置 (对应 08:00) */
-            top: 0%; /* JS 会动态改变这个百分比 */
-        }
-
-        /* * 2.5 时钟
-         * * 它也在左侧，由 JS 动态更新内容。
-        */
-        .timeline-clock {
-            position: absolute;
-            left: 80px; /* 在时间轨道的右侧 */
-            font-size: 2.5rem;
-            font-weight: 600;
-            font-family: monospace;
-            
-            /* * 它的 top 属性也随圆点一起移动
-            */
-            top: 90px;
-            transition: top 0.4s ease-out;
-        }
-
-
-        /* * 2.6 右侧滚动内容
-         * * 这是右侧滚动的文本部分。
-         * 它就是一堆堆叠在一起的 "step" 模块。
-        */
-        .timeline-scroll-right {
-            flex: 1; /* 占据右侧 50% 宽度 */
-            z-index: 10; /* 确保它在粘性元素之上 (如果需要的话) */
-        }
-
-        /* * 每一个 "step" 必须足够高 (例如 100vh，即一屏高)
-         * 这样才能保证在滚动时，一次只触发一个动画。
-         * 这就是它工作的秘诀。
-        */
-        .timeline-step {
-            min-height: 100vh; /* 关键！每个步骤占满一屏 */
-            padding: 40px;
-            padding-left: 8%;
+        .timeline-right {
+            flex: 1;
+            padding: 60px 80px;
+            position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* 垂直居中 */
-            
-            /* 只是为了视觉区分 */
-            border-bottom: 1px dashed #eee; 
         }
 
-        .timeline-step h2 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            max-width: 500px;
+        .timeline-header {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            transition: color 0.3s ease;
         }
-        
-        .timeline-step p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            max-width: 500px;
+
+        .section-4.dark .timeline-header {
+            color: #999;
+        }
+
+        .timeline-main-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 80px;
+            line-height: 1.2;
+            color: #1a1a1a;
+            transition: color 0.3s ease;
+        }
+
+        .section-4.dark .timeline-main-title {
+            color: #ffffff;
+        }
+
+        .timeline-dot-container {
+            position: relative;
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .time-dot {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #FDB913;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(253, 185, 19, 0.3);
+            flex-shrink: 0;
+        }
+
+        .time-dot:hover {
+            transform: scale(1.1);
+        }
+
+        .time-dot.white {
+            background: white;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .time-text {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
+            transition: color 0.3s ease;
+        }
+
+        .section-4.dark .time-text {
+            color: #ffffff;
+        }
+
+        .timeline-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .timeline-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            color: #1a1a1a;
+            transition: all 0.5s ease;
+        }
+
+        .section-4.dark .timeline-title {
+            color: #ffffff;
+        }
+
+        .timeline-description {
+            font-size: 18px;
+            line-height: 1.7;
             color: #333;
+            margin-bottom: 15px;
+            transition: all 0.5s ease;
         }
-        
-        /* 用于最后的暗色步骤 */
-        .timeline-step.is-dark-text {
-            background-color: var(--dark-bg);
-            color: var(--light-text);
+
+        .section-4.dark .timeline-description {
+            color: #cccccc;
         }
-        
-        .timeline-step.is-dark-text p {
-            color: #ccc;
+
+        .timeline-cta {
+            margin-top: 40px;
+        }
+
+        .cta-button {
+            padding: 16px 40px;
+            background: #ffffff;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <div class="header dark" id="header">
+        <div class="logo">HEAVN</div>
+        <button class="order-btn">Order now</button>
+    </div>
 
-    <main>
+    <!-- Product Thumbnail -->
+    <div class="product-thumbnail">
+        <div style="width:100%;height:100%;background:#333;"></div>
+        <div class="thumbnail-label">One</div>
+    </div>
 
-        <section class="full-screen-section" id="slogan-section">
-            <h1>Light that<br>feels like sun.</h1>
-            <p>As the first hybrid of desk and daylight luminaire, HEAVN One delivers ideal light at any time of day and enhances your well-being and performance.</p>
-        </section>
-
-        <section class="timeline-section">
-
-            <div class="timeline-sticky-left" id="sticky-container">
-                
-                <div class="timeline-track">
-                    <div class="timeline-dot" id="timeline-dot"></div>
-                </div>
-                
-                <div class="timeline-clock" id="timeline-clock">08:00</div>
-
-                <div class="timeline-visual active" data-visual-for="08:00">
-                    <div class="image-placeholder">[图像: 08:00 明亮的早晨日光]</div>
-                </div>
-
-                <div class="timeline-visual" data-visual-for="11:00">
-                    <div class="image-placeholder">[图像: 11:00 专注工作特写]</div>
-                </div>
-
-                <div class="timeline-visual" data-visual-for="12:00">
-                    <div class="image-placeholder">[图像: 12:00 视频会议正面补光]</div>
-                </div>
-                
-                <div class="timeline-visual" data-visual-for="16:00">
-                    <div class="image-placeholder">[图像: 16:00 室内氛围照明]</div>
-                </div>
-
-                <div class="timeline-visual" data-visual-for="21:00">
-                    <div class="image-placeholder">[图像: 21:00 温暖的夜间灯光]</div>
-                </div>
-                
-                <div class="timeline-visual" data-visual-for="24:00">
-                    <div class="image-placeholder">[图像: 24:00 准备睡眠]</div>
-                </div>
-
+    <!-- Section 1: Hero -->
+    <section class="section-1">
+        <div class="hero-content">
+            <div class="hero-image"></div>
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="hero-title-small">HEAVN</span>
+                    One
+                </h1>
+                <p class="hero-subtitle">The world's brightest desk luminaire.</p>
+                <p class="hero-cta">Scroll to learn more.</p>
             </div>
+        </div>
+    </section>
 
-            <div class="timeline-scroll-right">
+    <!-- Section 2: Description -->
+    <section class="section-2">
+        <div class="section-2-content">
+            <p class="section-2-subtitle">HEAVN One</p>
+            <h2 class="section-2-title">Brightens up your workday, reduces tiredness and improves your sleep.</h2>
+        </div>
+    </section>
 
-                <div class="timeline-step" 
-                     data-time="08:00" 
-                     data-dot-pos="0%" 
-                     data-theme="light">
-                    <h2>Your working day with HEAVN One</h2>
-                </div>
-                
-                <div class="timeline-step" 
-                     data-time="08:00" 
-                     data-dot-pos="0%"
-                     data-theme="light">
-                    <h2>The energy boost in the morning.</h2>
-                    <p>The full-spectrum daylight lamp that can be switched on at the front is a real wake-up call. With an effect of up to 10,000 lux...</p>
-                </div>
+    <!-- Section 3: Yellow Circle -->
+    <section class="section-3" id="section3">
+        <div class="yellow-circle" id="yellowCircle"></div>
+        <div class="section-3-content">
+            <h2 class="section-3-title">
+                Light <span class="circle-image"></span> that<br>feels like sun.
+            </h2>
+            <p class="section-3-description">
+                As the first hybrid of desk and daylight luminaire,<br>
+                HEAVN One delivers ideal light at any time of day and<br>
+                enhances your well-being and performance.
+            </p>
+        </div>
+    </section>
 
-                <div class="timeline-step" 
-                     data-time="11:00" 
-                     data-dot-pos="25%"
-                     data-theme="light">
-                    <h2>Full light. Full focus.</h2>
-                    <p>The downward desk illumination provides wide-area illumination with linear, shadow-free light.</p>
-                </div>
-
-                <div class="timeline-step" 
-                     data-time="12:00" 
-                     data-dot-pos="40%"
-                     data-theme="light">
-                    <h2>Sets the scene perfectly.</h2>
-                    <p>The switchable, frontal light function acts like a soft box and creates a natural brightening of the area around the face.</p>
-                </div>
-                
-                <div class="timeline-step" 
-                     data-time="16:00" 
-                     data-dot-pos="60%"
-                     data-theme="light">
-                    <h2>Outside dark. Inside atmospheric.</h2>
-                    <p>The indirect light of HEAVN One creates an atmospheric ambience and eliminates the cave feeling of typical desk lamps.</p>
-                </div>
-
-                <div class="timeline-step is-dark-text" 
-                     data-time="21:00" 
-                     data-dot-pos="80%"
-                     data-theme="dark"> <h2>Healthy sleep. Ideal regeneration.</h2>
-                    <p>In the evening, the light from HEAVN One becomes warmer and stimulates the production of the sleep hormone melatonin.</p>
-                </div>
-
-                <div class="timeline-step is-dark-text" 
-                     data-time="24:00" 
-                     data-dot-pos="100%"
-                     data-theme="dark"> <h2>Healthy sleep. Ideal regeneration.</h2>
-                    <p>The result is healthy sleep - the best foundation for sustainable performance at work.</p>
-                </div>
-
+    <!-- Section 4: Timeline -->
+    <section class="section-4" id="timelineSection">
+        <div class="timeline-container">
+            <div class="timeline-left" id="timelineImages">
+                <!-- Images will be added dynamically -->
             </div>
-        </section>
-        
-        <section class="full-screen-section">
-            <h2>其他内容</h2>
-            <p>粘性滚动区域到此结束。</p>
-        </section>
+            <div class="timeline-right">
+                <div class="timeline-header">Automatic light adjustment.</div>
+                <h2 class="timeline-main-title">Your working day<br>with HEAVN One</h2>
+                
+                <div class="timeline-dot-container">
+                    <div class="time-dot" id="timeDot">
+                        <span style="font-size: 0;"></span>
+                    </div>
+                    <span class="time-text" id="timeText">06:00</span>
+                </div>
 
-    </main>
+                <div class="timeline-content" id="timelineContent">
+                    <!-- Content will be updated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
-        // 等待文档加载完毕
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // ---------------------------------
-            // 1. 获取所有需要的 DOM 元素
-            // ---------------------------------
-            
-            // 右侧滚动的“步骤”
-            const steps = document.querySelectorAll('.timeline-step');
-            
-            // 左侧所有的“视觉元素”（图像等）
-            const visuals = document.querySelectorAll('.timeline-visual');
-            
-            // 左侧粘性容器
-            const stickyContainer = document.getElementById('sticky-container');
-            
-            // 移动的圆点
-            const timelineDot = document.getElementById('timeline-dot');
-            
-            // 时钟
-            const timelineClock = document.getElementById('timeline-clock');
-            
-            // 时钟的初始 Y 位置 (90px)
-            const clockInitialY = timelineClock.offsetTop;
-            
-            // 时间线轨道
-            const timelineTrack = document.querySelector('.timeline-track');
-            
-            // 轨道的高度 (用于计算时钟的Y轴移动)
-            const trackHeight = timelineTrack.offsetHeight;
-            
+        // Timeline data
+        const timelineData = [
+            {
+                time: '06:00',
+                title: 'The energy boost<br>in the morning.',
+                description: 'The full-spectrum daylight lamp that can be switched on at the front is a real wake-up call. With an effect of up to 10,000 lux, you reactivate your bodily functions for more vitality, wakefulness and concentration.',
+                description2: null,
+                bgColor: '#f5f5f5',
+                dotClass: '',
+                showCTA: false,
+                images: ['#e8e8e8', '#d8d8d8']
+            },
+            {
+                time: '09:00',
+                title: 'Full light. Full focus.',
+                description: 'The downward desk illumination provides wide-area illumination with linear, shadow-free light. For effortless work with documents or on the monitor.',
+                description2: null,
+                bgColor: '#f5f5f5',
+                dotClass: '',
+                showCTA: false,
+                images: ['#d5d5d5', '#e5e5e5']
+            },
+            {
+                time: '15:00',
+                title: 'Sets the scene perfectly.',
+                description: 'The switchable, frontal light function acts like a soft box and creates a natural brightening of the area around the face. For a perfect appearance in video conferences!',
+                description2: null,
+                bgColor: '#f5f5f5',
+                dotClass: '',
+                showCTA: false,
+                images: ['#c8c8c8', '#d0d0d0']
+            },
+            {
+                time: '23:00',
+                title: 'Healthy sleep.<br>Ideal regeneration.',
+                description: 'In the evening, the light from HEAVN One becomes warmer and stimulates the production of the sleep hormone melatonin in your body.',
+                description2: 'The result is healthy sleep - the best foundation for sustainable performance at work.',
+                bgColor: '#1a1a1a',
+                dotClass: 'white',
+                showCTA: true,
+                images: ['#2a2a2a']
+            }
+        ];
 
-            // ---------------------------------
-            // 2. 创建一个“侦测器” (Intersection Observer)
-            // 
-            // 这是现代 JavaScript 中实现滚动动画的最佳方式。
-            // 它可以“侦测”一个元素何时进入或离开屏幕。
-            // ---------------------------------
-            
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    // 遍历所有被侦测到的 "entry" (即滚动的步骤)
-                    entries.forEach(entry => {
-                        
-                        // 当一个 "step" 元素进入视口（超过 50% 可见）时
-                        if (entry.isIntersecting) {
-                            
-                            // ---------------------------------
-                            // 3. 从 HTML 的 data-* 属性中读取数据
-                            // ---------------------------------
-                            const stepData = entry.target.dataset;
-                            const time = stepData.time;
-                            const dotPosPercent = stepData.dotPos;
-                            const theme = stepData.theme;
+        let currentIndex = 0;
+        let hasExpandedCircle = false;
+        let hasDroppedCircle = false;
 
-                            // ---------------------------------
-                            // 4. 更新左侧的视觉元素
-                            // ---------------------------------
-                            
-                            // (A) 更新时钟文本
-                            timelineClock.textContent = time;
-
-                            // (B) 更新圆点位置
-                            timelineDot.style.top = dotPosPercent;
-                            
-                            // (C) 更新时钟位置
-                            // (计算: 初始Y + (轨道高度 * 百分比) - (时钟一半的高度))
-                            // 这样可以让时钟的中心和圆点对齐
-                            const newClockY = clockInitialY + (trackHeight * (parseFloat(dotPosPercent) / 100)) - (timelineClock.offsetHeight / 2) + (timelineDot.offsetHeight / 2);
-                            timelineClock.style.top = `${newClockY}px`;
-
-
-                            // (D) 切换左侧的主题（亮/暗）
-                            if (theme === 'dark') {
-                                stickyContainer.classList.add('is-dark');
-                            } else {
-                                stickyContainer.classList.remove('is-dark');
-                            }
-                            
-                            // (E) 切换激活的视觉元素（图像）
-                            
-                            // (1) 首先，移除所有视觉元素的 'active' 类（让它们全部隐藏）
-                            visuals.forEach(v => v.classList.remove('active'));
-                            
-                            // (2) 找到与当前时间匹配的那个视觉元素
-                            // (例如 time '11:00' 对应 data-visual-for='11:00')
-                            const activeVisual = document.querySelector(`.timeline-visual[data-visual-for="${time}"]`);
-                            
-                            // (3) 如果找到了，就给它添加 'active' 类（让它显示）
-                            if(activeVisual) {
-                                activeVisual.classList.add('active');
-                            }
-                        }
-                    });
-                }, 
-                {
-                    // 阈值：当元素 50% 可见时触发
-                    // `rootMargin` 可以在中心点偏上或偏下的位置触发，
-                    // 0.5 (50%) 对于居中触发来说很常用。
-                    threshold: 0.5 
-                }
-            );
-
-            // ---------------------------------
-            // 5. 启动侦测器
-            //
-            // 让侦测器“监视”右侧的每一个 step 元素
-            // ---------------------------------
-            steps.forEach(step => {
-                observer.observe(step);
+        // Initialize timeline images
+        function initializeImages() {
+            const container = document.getElementById('timelineImages');
+            timelineData.forEach((data, index) => {
+                data.images.forEach((color, imgIndex) => {
+                    const div = document.createElement('div');
+                    div.className = 'timeline-image';
+                    div.style.background = color;
+                    div.dataset.index = index;
+                    div.dataset.imgIndex = imgIndex;
+                    container.appendChild(div);
+                });
             });
+            updateImages();
+        }
+
+        // Update timeline images
+        function updateImages() {
+            const images = document.querySelectorAll('.timeline-image');
+            images.forEach((img) => {
+                const index = parseInt(img.dataset.index);
+                img.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        // Header color change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            const scrollPos = window.scrollY;
+            const section3 = document.querySelector('.section-3');
+            const section3Top = section3.offsetTop;
+            const section3Bottom = section3Top + section3.offsetHeight;
+            const section4 = document.getElementById('timelineSection');
+            const section4Top = section4.offsetTop;
+
+            // Header color
+            if (scrollPos >= section3Top - 100 && scrollPos < section4Top - 100) {
+                header.classList.remove('dark');
+                header.classList.add('light');
+            } else {
+                header.classList.remove('light');
+                header.classList.add('dark');
+            }
+
+            // Yellow circle animations
+            const yellowCircle = document.getElementById('yellowCircle');
+            const expandTrigger = section3Top - window.innerHeight / 2;
+            const shrinkTrigger = section3Bottom - window.innerHeight / 2;
+            
+            if (scrollPos >= expandTrigger && !hasExpandedCircle) {
+                yellowCircle.classList.add('expand');
+                hasExpandedCircle = true;
+            }
+            
+            if (scrollPos >= shrinkTrigger && !hasDroppedCircle) {
+                yellowCircle.classList.add('shrink');
+                hasDroppedCircle = true;
+            }
         });
 
-    </script>
+        // Update timeline content
+        function updateTimeline() {
+            const data = timelineData[currentIndex];
+            
+            // Update dot
+            const dot = document.getElementById('timeDot');
+            dot.className = 'time-dot ' + data.dotClass;
+            
+            // Update time
+            document.getElementById('timeText').textContent = data.time;
+            
+            // Update background
+            const section = document.getElementById('timelineSection');
+            section.style.background = data.bgColor;
+            if (data.bgColor === '#1a1a1a') {
+                section.classList.add('dark');
+            } else {
+                section.classList.remove('dark');
+            }
 
+            // Update content
+            let html = `
+                <h3 class="timeline-title">${data.title}</h3>
+                <p class="timeline-description">${data.description}</p>
+            `;
+
+            if (data.description2) {
+                html += `<p class="timeline-description">${data.description2}</p>`;
+            }
+
+            if (data.showCTA) {
+                html += `
+                    <div class="timeline-cta">
+                        <button class="cta-button">Order now</button>
+                    </div>
+                `;
+            }
+
+            document.getElementById('timelineContent').innerHTML = html;
+            
+            // Update images
+            updateImages();
+        }
+
+        // Click on dot to advance
+        document.getElementById('timeDot').addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % timelineData.length;
+            updateTimeline();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const section = document.getElementById('timelineSection');
+            const rect = section.getBoundingClientRect();
+            
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                if (e.key === 'ArrowDown' && currentIndex < timelineData.length - 1) {
+                    e.preventDefault();
+                    currentIndex++;
+                    updateTimeline();
+                } else if (e.key === 'ArrowUp' && currentIndex > 0) {
+                    e.preventDefault();
+                    currentIndex--;
+                    updateTimeline();
+                }
+            }
+        });
+
+        // Wheel event on timeline
+        document.getElementById('timelineSection').addEventListener('wheel', (e) => {
+            e.preventDefault();
+            if (e.deltaY > 0 && currentIndex < timelineData.length - 1) {
+                currentIndex++;
+                updateTimeline();
+            } else if (e.deltaY < 0 && currentIndex > 0) {
+                currentIndex--;
+                updateTimeline();
+            }
+        }, { passive: false });
+
+        // Initialize
+        initializeImages();
+        updateTimeline();
+    </script>
 </body>
 </html>
