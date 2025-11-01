@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Queen Elizabeth II - A Journey in Coins</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -170,7 +173,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 80px 60px;
+            padding: 40px 50px;
             backface-visibility: hidden;
             transform: rotateY(0deg);
         }
@@ -231,10 +234,11 @@
 
         /* Cover content */
         .queen-portrait {
-            width: 320px;
-            height: 400px;
-            margin-bottom: 40px;
-            border-radius: 6px;
+            width: 360px;
+            height: 380px;
+            margin-bottom: 25px;
+            margin-top: 10px;
+            border-radius: 4px;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
@@ -246,34 +250,48 @@
         }
 
         .cover-title {
-            font-size: 24px;
-            font-weight: 300;
+            font-size: 48px;
+            font-weight: 400;
             color: #ffffff;
             text-align: center;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
             font-style: italic;
+            font-family: 'Playfair Display', Georgia, serif;
         }
 
         .cover-main-title {
-            font-size: 68px;
+            font-size: 80px;
             font-weight: 700;
             color: #ffffff;
             text-align: center;
-            line-height: 1.1;
-            margin-bottom: 20px;
+            line-height: 1;
+            margin-bottom: 30px;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: 2px;
+        }
+
+        .cover-subtitle {
+            font-size: 28px;
+            font-weight: 400;
+            color: #ffffff;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: 1px;
         }
 
         .cover-author {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 300;
-            color: rgba(255, 255, 255, 0.95);
+            color: rgba(255, 255, 255, 0.9);
             text-align: center;
-            letter-spacing: 3px;
             font-style: italic;
-            margin-top: 20px;
+            margin-top: 10px;
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: 0.5px;
         }
 
         /* Spine shadow in center */
@@ -743,7 +761,7 @@
                 <!-- Left page (hidden initially, shows after opening) -->
                 <div class="page-left">
                     <div class="page-image-container">
-                        <img src="3.png" alt="Queen Elizabeth II Coronation">
+                        <img src="2.png" alt="Queen Elizabeth II Coronation">
                     </div>
                 </div>
 
@@ -754,17 +772,18 @@
                 <div class="page-right-container" id="pageRightContainer">
                     <!-- Front cover -->
                     <div class="cover-front">
+                        <div class="cover-title">Queen</div>
+                        <div class="cover-main-title">Elizabeth<br>II</div>
                         <div class="queen-portrait">
                             <img src="1.png" alt="Queen Elizabeth II">
                         </div>
-                        <div class="cover-title">Queen</div>
-                        <div class="cover-main-title">Elizabeth<br>II</div>
-                        <div class="cover-author">A Journey in Coins</div>
+                        <div class="cover-subtitle">A Journey in Coins</div>
+                        <div class="cover-author">Jingwen Han, Yamin Cai</div>
                     </div>
                     <!-- Back of cover (inside page) -->
                     <div class="cover-back">
                         <div class="page-image-container">
-                            <img src="2.png" alt="Queen Elizabeth II with Attendants">
+                            <img src="3.png" alt="Queen Elizabeth II with Attendants">
                         </div>
                     </div>
                 </div>
