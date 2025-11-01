@@ -203,7 +203,8 @@
             justify-content: center;
         }
 
-        .cover-back::after {
+        /* Gray vertical line removed for cleaner look */
+        /* .cover-back::after {
             content: '';
             position: absolute;
             right: 0;
@@ -211,7 +212,7 @@
             width: 12px;
             height: 100%;
             background: linear-gradient(to left, rgba(0,0,0,0.15), transparent);
-        }
+        } */
 
         /* Page images */
         .page-image-container {
