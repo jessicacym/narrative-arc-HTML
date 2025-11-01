@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8888 -888888</title>
+    <title>Queen Elizabeth II - A Journey in Coins</title>
     <style>
         * {
             margin: 0;
@@ -14,9 +14,12 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             overflow-x: hidden;
+            background: #000;
         }
 
-        /* Intro Section */
+        /* ========== BOOK INTRO ANIMATION ========== */
+        
+        /* Intro Section with Book */
         .intro-section {
             position: fixed;
             top: 0;
@@ -28,19 +31,31 @@
             align-items: center;
             justify-content: center;
             z-index: 10000;
-            transition: opacity 0.8s ease;
+            perspective: 2500px;
+            opacity: 1;
+        }
+
+        .intro-section.fade-out {
+            animation: fadeOutIntro 1s ease forwards;
+        }
+
+        @keyframes fadeOutIntro {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
         }
 
         .intro-section.hidden {
-            opacity: 0;
-            pointer-events: none;
+            display: none;
         }
 
-        .book-container {
+        .book-wrapper {
             position: relative;
-            cursor: pointer;
             opacity: 0;
-            animation: fadeInBook 3s ease forwards;
+            animation: fadeInBook 2s ease forwards;
             animation-delay: 0.5s;
         }
 
@@ -50,118 +65,264 @@
             }
         }
 
-        .book-cover {
-            width: 320px;
-            height: 480px;
-            background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
-            border-radius: 4px;
-            box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.8),
-                inset 0 0 1px rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 40px;
+        /* Book Container - fixed size */
+        .book-container {
             position: relative;
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            width: 600px;
+            height: 750px;
+            transform-style: preserve-3d;
         }
 
-        .book-container:hover .book-cover {
-            transform: scale(1.02);
-        }
-
-        .book-spine {
+        /* Left page (hidden initially, shows after opening) */
+        .page-left {
             position: absolute;
+            width: 600px;
+            height: 750px;
             left: 0;
             top: 0;
-            width: 8px;
-            height: 100%;
-            background: linear-gradient(to right, #0a0a0a, #1a1a1a);
-            border-radius: 4px 0 0 4px;
-        }
-
-        .book-title {
-            font-size: 56px;
-            font-weight: 700;
-            text-align: center;
-            line-height: 1.1;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #d4af37 0%, #f4e5b0 50%, #d4af37 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: goldGleam 4s ease-in-out infinite;
-            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-        }
-
-        @keyframes goldGleam {
-            0%, 100% {
-                background-position: 0% 50%;
-                filter: brightness(1);
-            }
-            50% {
-                background-position: 100% 50%;
-                filter: brightness(1.3);
-            }
-        }
-
-        .book-subtitle {
-            font-size: 18px;
-            font-weight: 300;
-            text-align: center;
-            color: rgba(212, 175, 55, 0.7);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .book-author {
-            font-size: 24px;
-            font-weight: 400;
-            text-align: center;
-            color: rgba(212, 175, 55, 0.8);
-            letter-spacing: 2px;
-            margin-top: auto;
-        }
-
-        .book-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 560px;
-            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            background: #ffffff;
+            border-radius: 8px 0 0 8px;
+            box-shadow: -20px 0 40px rgba(0, 0, 0, 0.3);
+            padding: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             opacity: 0;
-            animation: softGlow 5s ease-in-out infinite;
-            animation-delay: 3s;
-            pointer-events: none;
+            transform-origin: right center;
         }
 
-        @keyframes softGlow {
-            0%, 100% {
-                opacity: 0;
-            }
-            50% {
+        .book-container.opening .page-left {
+            animation: showLeftPage 0.5s ease forwards;
+            animation-delay: 2s;
+        }
+
+        .book-container.opened .page-left {
+            opacity: 1;
+        }
+
+        @keyframes showLeftPage {
+            to {
                 opacity: 1;
             }
         }
 
-        .click-hint {
+        .page-left::before {
+            content: '';
             position: absolute;
-            bottom: -70px;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(to right, 
+                rgba(0,0,0,0.05) 0%, 
+                rgba(0,0,0,0.02) 5%,
+                transparent 10%);
+            border-radius: 8px 0 0 8px;
+            pointer-events: none;
+        }
+
+        /* Right page with cover (flips open) */
+        .page-right-container {
+            position: absolute;
+            width: 600px;
+            height: 750px;
+            right: 0;
+            top: 0;
+            transform-style: preserve-3d;
+            transform-origin: left center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .page-right-container:hover:not(.flipping) {
+            transform: scale(1.02);
+        }
+
+        .book-container.opening .page-right-container {
+            animation: flipCoverOpen 2.5s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+            cursor: default;
+        }
+
+        .book-container.opened .page-right-container {
+            transform: rotateY(-180deg);
+        }
+
+        @keyframes flipCoverOpen {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(-180deg);
+            }
+        }
+
+        /* Cover front (what you see initially) */
+        .cover-front {
+            position: absolute;
+            width: 600px;
+            height: 750px;
+            background: linear-gradient(145deg, #3d4b6e 0%, #2a3550 100%);
+            border-radius: 0 8px 8px 0;
+            box-shadow: 
+                20px 0 50px rgba(0, 0, 0, 0.6),
+                0 30px 80px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 60px;
+            backface-visibility: hidden;
+            transform: rotateY(0deg);
+        }
+
+        .cover-front::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.4), transparent);
+        }
+
+        /* Cover back (inside of cover - shows when flipped) */
+        .cover-back {
+            position: absolute;
+            width: 600px;
+            height: 750px;
+            background: linear-gradient(145deg, #f8f8f8 0%, #ffffff 100%);
+            border-radius: 8px 0 0 8px;
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            box-shadow: 
+                -20px 0 40px rgba(0, 0, 0, 0.2),
+                inset 10px 0 20px rgba(0, 0, 0, 0.03);
+            padding: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover-back::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 12px;
+            height: 100%;
+            background: linear-gradient(to left, rgba(0,0,0,0.15), transparent);
+        }
+
+        /* Page images */
+        .page-image-container {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .page-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Cover content */
+        .queen-portrait {
+            width: 320px;
+            height: 400px;
+            margin-bottom: 40px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .queen-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cover-title {
+            font-size: 24px;
+            font-weight: 300;
+            color: #ffffff;
+            text-align: center;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .cover-main-title {
+            font-size: 68px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .cover-author {
+            font-size: 22px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            letter-spacing: 3px;
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        /* Spine shadow in center */
+        .spine-shadow {
+            position: absolute;
+            width: 3px;
+            height: 100%;
+            top: 0;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 12px;
-            letter-spacing: 3px;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .book-container.opening .spine-shadow {
+            animation: showSpine 0.5s ease forwards;
+            animation-delay: 2s;
+        }
+
+        .book-container.opened .spine-shadow {
+            opacity: 1;
+        }
+
+        @keyframes showSpine {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Click Hint */
+        .click-hint {
+            position: absolute;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             opacity: 0;
             animation: fadeInHint 1.5s ease forwards;
-            animation-delay: 4s;
+            animation-delay: 3s;
+            font-style: italic;
+            white-space: nowrap;
+        }
+
+        .book-container.opening .click-hint {
+            display: none;
         }
 
         @keyframes fadeInHint {
@@ -170,35 +331,15 @@
             }
         }
 
-        /* Book Opening Animation */
-        .book-container.opening {
-            animation: bookOpen 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        .click-hint::before {
+            content: '✨ ';
         }
 
-        @keyframes bookOpen {
-            0% {
-                transform: scale(1) rotateY(0deg);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.1) rotateY(10deg);
-            }
-            100% {
-                transform: scale(3) rotateY(90deg);
-                opacity: 0;
-            }
+        .click-hint::after {
+            content: ' ✨';
         }
 
-        .intro-section.opening {
-            animation: fadeOutIntro 0.8s ease forwards;
-            animation-delay: 0.8s;
-        }
-
-        @keyframes fadeOutIntro {
-            to {
-                opacity: 0;
-            }
-        }
+        /* ========== MAIN WEBSITE CONTENT ========== */
 
         /* Main Content */
         .main-content {
@@ -594,30 +735,54 @@
     </style>
 </head>
 <body>
-    <!-- Intro Section with Book -->
+    <!-- ========== BOOK INTRO SECTION ========== -->
     <div class="intro-section" id="introSection">
-        <div class="book-container" id="bookContainer">
-            <div class="book-glow"></div>
-            <div class="book-cover">
-                <div class="book-spine"></div>
-                <div class="book-subtitle">Queen of Our Times</div>
-                <div class="book-title">ELIZABETH<br>II</div>
-                <div class="book-author">Robert Hardman</div>
+        <div class="book-wrapper">
+            <div class="book-container" id="bookContainer">
+                <!-- Left page (hidden initially, shows after opening) -->
+                <div class="page-left">
+                    <div class="page-image-container">
+                        <img src="屏幕截图_2025-10-30_191509.png" alt="Queen Elizabeth II Coronation">
+                    </div>
+                </div>
+
+                <!-- Center spine shadow -->
+                <div class="spine-shadow"></div>
+
+                <!-- Right page with cover (flips open) -->
+                <div class="page-right-container" id="pageRightContainer">
+                    <!-- Front cover -->
+                    <div class="cover-front">
+                        <div class="queen-portrait">
+                            <img src="Queen_Elizabeth_II_official_portrait_for_1959_tour__retouched__1.png" alt="Queen Elizabeth II">
+                        </div>
+                        <div class="cover-title">Queen</div>
+                        <div class="cover-main-title">Elizabeth<br>II</div>
+                        <div class="cover-author">A Journey in Coins</div>
+                    </div>
+                    <!-- Back of cover (inside page) -->
+                    <div class="cover-back">
+                        <div class="page-image-container">
+                            <img src="Image_20251030190515.png" alt="Queen Elizabeth II with Attendants">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="click-hint">Click to Enter</div>
+
+            <div class="click-hint">Click to Open the Book</div>
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- ========== MAIN WEBSITE CONTENT ========== -->
     <div class="main-content" id="mainContent">
         <!-- Header -->
         <header class="header dark" id="header">
-            <div class="logo">88888</div>
-            <button class="order-btn">88888</button>
+            <div class="logo">HEAVN</div>
+            <button class="order-btn">Order now</button>
         </header>
 
         <div class="product-thumbnail">
-            <span class="thumbnail-label">8888</span>
+            <span class="thumbnail-label">HEAVN One</span>
         </div>
 
         <!-- Section 1: Hero -->
@@ -626,10 +791,10 @@
                 <div class="hero-image"></div>
                 <div class="hero-text">
                     <h1 class="hero-title">
-                        <span class="hero-title-small">8888</span>
-                        8888
+                        <span class="hero-title-small">HEAVN</span>
+                        One
                     </h1>
-                    <p class="hero-subtitle">8888888</p>
+                    <p class="hero-subtitle">The world's brightest desk luminaire.</p>
                     <p class="hero-cta">Scroll to learn more.</p>
                 </div>
             </div>
@@ -638,8 +803,8 @@
         <!-- Section 2: Description -->
         <section class="section-2">
             <div class="section-2-content">
-                <p class="section-2-subtitle">88888</p>
-                <h2 class="section-2-title">8888888</h2>
+                <p class="section-2-subtitle">HEAVN One</p>
+                <h2 class="section-2-title">Brightens up your workday, reduces tiredness and improves your sleep.</h2>
             </div>
         </section>
 
@@ -648,12 +813,12 @@
             <div class="yellow-circle" id="yellowCircle"></div>
             <div class="section-3-content">
                 <h2 class="section-3-title">
-                   8888<span class="circle-image"></span>88<br>8888.
+                    Light <span class="circle-image"></span> that<br>feels like sun.
                 </h2>
                 <p class="section-3-description">
-                   888888<br>
-                 8888888<br>
-                   8888888
+                    As the first hybrid of desk and daylight luminaire,<br>
+                    HEAVN One delivers ideal light at any time of day and<br>
+                    enhances your well-being and performance.
                 </p>
             </div>
         </section>
@@ -665,8 +830,8 @@
                     <!-- Images will be added dynamically -->
                 </div>
                 <div class="timeline-right">
-                    <div class="timeline-header">888888</div>
-                    <h2 class="timeline-main-title">88888888</h2>
+                    <div class="timeline-header">Automatic light adjustment.</div>
+                    <h2 class="timeline-main-title">Your working day<br>with HEAVN One</h2>
                     
                     <div class="timeline-dot-container">
                         <div class="time-dot" id="timeDot">
@@ -684,33 +849,51 @@
     </div>
 
     <script>
-        // Intro animation
+        // ========== BOOK ANIMATION SCRIPT ==========
         const bookContainer = document.getElementById('bookContainer');
+        const pageRightContainer = document.getElementById('pageRightContainer');
         const introSection = document.getElementById('introSection');
         const mainContent = document.getElementById('mainContent');
+        let bookState = 'closed';
 
-        bookContainer.addEventListener('click', () => {
-            // Start book opening animation
-            bookContainer.classList.add('opening');
-            introSection.classList.add('opening');
-            
-            // Show main content after animation
-            setTimeout(() => {
-                introSection.classList.add('hidden');
-                mainContent.classList.add('visible');
-                document.body.style.overflow = 'auto';
-            }, 1600);
+        // Click on cover to open book
+        pageRightContainer.addEventListener('click', () => {
+            if (bookState === 'closed') {
+                bookState = 'opening';
+                bookContainer.classList.add('opening');
+                
+                // After flip animation completes (2.5s), keep book open for 1 second, then fade to main site
+                setTimeout(() => {
+                    bookContainer.classList.remove('opening');
+                    bookContainer.classList.add('opened');
+                    bookState = 'opened';
+                    
+                    // Start fade out after 1 second
+                    setTimeout(() => {
+                        introSection.classList.add('fade-out');
+                        mainContent.classList.add('visible');
+                        
+                        // Remove intro section completely after fade completes
+                        setTimeout(() => {
+                            introSection.classList.add('hidden');
+                            document.body.style.overflow = 'auto';
+                        }, 1000);
+                    }, 1000);
+                }, 2500);
+            }
         });
 
         // Prevent scrolling during intro
         document.body.style.overflow = 'hidden';
 
+        // ========== MAIN WEBSITE SCRIPTS ==========
+        
         // Timeline data
         const timelineData = [
             {
                 time: '06:00',
-                title: '888888.',
-                description: '88888888',
+                title: 'The energy boost<br>in the morning.',
+                description: 'The full-spectrum daylight lamp that can be switched on at the front is a real wake-up call. With an effect of up to 10,000 lux, you reactivate your bodily functions for more vitality, wakefulness and concentration.',
                 description2: null,
                 bgColor: '#f5f5f5',
                 dotClass: '',
@@ -719,8 +902,8 @@
             },
             {
                 time: '09:00',
-                title: '888888',
-                description: '88888888',
+                title: 'Full light. Full focus.',
+                description: 'The downward desk illumination provides wide-area illumination with linear, shadow-free light. For effortless work with documents or on the monitor.',
                 description2: null,
                 bgColor: '#f5f5f5',
                 dotClass: '',
@@ -729,8 +912,8 @@
             },
             {
                 time: '15:00',
-                title: '888888',
-                description: '888888',
+                title: 'Sets the scene perfectly.',
+                description: 'The switchable, frontal light function acts like a soft box and creates a natural brightening of the area around the face. For a perfect appearance in video conferences!',
                 description2: null,
                 bgColor: '#f5f5f5',
                 dotClass: '',
@@ -739,9 +922,9 @@
             },
             {
                 time: '23:00',
-                title: '888888',
-                description: '8888888',
-                description2: '8888888',
+                title: 'Healthy sleep.<br>Ideal regeneration.',
+                description: 'In the evening, the light from HEAVN One becomes warmer and stimulates the production of the sleep hormone melatonin in your body.',
+                description2: 'The result is healthy sleep - the best foundation for sustainable performance at work.',
                 bgColor: '#1a1a1a',
                 dotClass: 'white',
                 showCTA: true,
