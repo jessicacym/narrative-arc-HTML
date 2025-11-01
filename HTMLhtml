@@ -381,7 +381,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 30px 40px;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+
+        .header.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .header.light {
@@ -431,99 +438,94 @@
             justify-content: center;
         }
 
-        /* Section 1 - Hero */
+        /* Section 1 - Title Page */
         .section-1 {
-            background: #0a0a0a;
-            color: white;
-        }
-
-        .hero-content {
+            background: #ffffff;
+            color: #1a1a1a;
             display: flex;
-            width: 100%;
-            height: 100vh;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
         }
 
-        .hero-image {
-            flex: 1;
-            height: 100%;
-            background: #333;
-        }
-
-        .hero-text {
-            flex: 1;
-            text-align: center;
-            padding: 0 60px;
-        }
-
-        .hero-title {
-            font-size: 120px;
-            font-weight: 700;
-            margin-bottom: 40px;
-            line-height: 1;
-        }
-
-        .hero-title-small {
-            font-size: 60px;
-            font-weight: 300;
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        .hero-subtitle {
-            font-size: 22px;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 10px;
-        }
-
-        .hero-cta {
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .product-thumbnail {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 180px;
-            height: 120px;
-            background: rgba(0, 0, 0, 0.3);
+        .title-image-container {
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             border-radius: 8px;
-            z-index: 999;
+            overflow: hidden;
         }
 
-        .thumbnail-label {
+        .title-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .coin-button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .coin-button {
+            width: 120px;
+            height: 120px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: radial-gradient(circle at 30% 30%, #f0f0f0, #c0c0c0 50%, #a0a0a0);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coin-button::before {
+            content: '';
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            color: white;
-            font-size: 14px;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #e8e8e8, #d0d0d0 40%, #b8b8b8);
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Section 2 - Description */
-        .section-2 {
-            background: #0a0a0a;
-            color: white;
+        .coin-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-image: url('屏幕截图_2025-11-01_174951.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            opacity: 0.4;
         }
 
-        .section-2-content {
-            max-width: 700px;
-            text-align: center;
-            padding: 0 40px;
+        .coin-button:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .section-2-title {
-            font-size: 48px;
-            font-weight: 300;
-            line-height: 1.4;
-            margin-bottom: 20px;
+        .coin-button:active {
+            transform: scale(1.05) translateY(-2px);
         }
 
-        .section-2-subtitle {
-            font-size: 20px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 600;
+        .click-text {
+            font-size: 16px;
+            font-style: italic;
+            color: #666;
+            letter-spacing: 1px;
+            font-family: 'Playfair Display', Georgia, serif;
         }
 
         /* Section 3 - Yellow Circle */
@@ -538,12 +540,13 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: #FDB913;
+            background: radial-gradient(circle at 30% 30%, #e8e8e8, #c0c0c0 50%, #a8a8a8);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 1;
             opacity: 0;
+            box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.5);
         }
 
         .yellow-circle.expand {
@@ -613,9 +616,10 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: #FDB913;
+            background: radial-gradient(circle at 30% 30%, #e8e8e8, #c0c0c0 50%, #a8a8a8);
             vertical-align: middle;
             margin: 0 15px;
+            box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.5), 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .section-3-description {
@@ -693,12 +697,13 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: #FDB913;
+            background: radial-gradient(circle at 30% 30%, #e8e8e8, #c0c0c0 50%, #a8a8a8);
             cursor: pointer;
             transition: transform 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.5), 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .time-dot:hover {
@@ -796,35 +801,19 @@
     <!-- ========== MAIN WEBSITE CONTENT ========== -->
     <div class="main-content" id="mainContent">
         <!-- Header -->
-        <header class="header dark" id="header">
-            <div class="logo">HEAVN</div>
-            <button class="order-btn">Order now</button>
+        <header class="header light" id="header">
+            <div class="logo">ELIZABETH II</div>
+            <button class="order-btn">Explore More</button>
         </header>
 
-        <div class="product-thumbnail">
-            <span class="thumbnail-label">HEAVN One</span>
-        </div>
-
-        <!-- Section 1: Hero -->
-        <section class="section-1">
-            <div class="hero-content">
-                <div class="hero-image"></div>
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        <span class="hero-title-small">HEAVN</span>
-                        One
-                    </h1>
-                    <p class="hero-subtitle">The world's brightest desk luminaire.</p>
-                    <p class="hero-cta">Scroll to learn more.</p>
-                </div>
+        <!-- Section 1: Title Page -->
+        <section class="section-1" id="section1">
+            <div class="title-image-container">
+                <img src="屏幕截图_2025-11-01_174951.png" alt="From Metal to Memory - Queen Elizabeth II">
             </div>
-        </section>
-
-        <!-- Section 2: Description -->
-        <section class="section-2">
-            <div class="section-2-content">
-                <p class="section-2-subtitle">HEAVN One</p>
-                <h2 class="section-2-title">Brightens up your workday, reduces tiredness and improves your sleep.</h2>
+            <div class="coin-button-container">
+                <button class="coin-button" id="coinButton" aria-label="Enter the story"></button>
+                <div class="click-text">CLICK HERE</div>
             </div>
         </section>
 
@@ -833,12 +822,12 @@
             <div class="yellow-circle" id="yellowCircle"></div>
             <div class="section-3-content">
                 <h2 class="section-3-title">
-                    Light <span class="circle-image"></span> that<br>feels like sun.
+                    A Legacy <span class="circle-image"></span> In<br>Every Coin.
                 </h2>
                 <p class="section-3-description">
-                    As the first hybrid of desk and daylight luminaire,<br>
-                    HEAVN One delivers ideal light at any time of day and<br>
-                    enhances your well-being and performance.
+                    From 1953 to 2022, Queen Elizabeth II graced Canadian coins,<br>
+                    becoming the most portrayed monarch in numismatic history.<br>
+                    Four portraits. Seventy years. One enduring legacy.
                 </p>
             </div>
         </section>
@@ -850,14 +839,14 @@
                     <!-- Images will be added dynamically -->
                 </div>
                 <div class="timeline-right">
-                    <div class="timeline-header">Automatic light adjustment.</div>
-                    <h2 class="timeline-main-title">Your working day<br>with HEAVN One</h2>
+                    <div class="timeline-header">Four Portraits Across Time</div>
+                    <h2 class="timeline-main-title">The Evolution<br>of a Queen</h2>
                     
                     <div class="timeline-dot-container">
                         <div class="time-dot" id="timeDot">
                             <span style="font-size: 0;"></span>
                         </div>
-                        <span class="time-text" id="timeText">06:00</span>
+                        <span class="time-text" id="timeText">1953</span>
                     </div>
 
                     <div class="timeline-content" id="timelineContent">
@@ -908,12 +897,23 @@
 
         // ========== MAIN WEBSITE SCRIPTS ==========
         
+        // Coin button - scroll to Section 3
+        const coinButton = document.getElementById('coinButton');
+        if (coinButton) {
+            coinButton.addEventListener('click', () => {
+                const section3 = document.querySelector('.section-3');
+                if (section3) {
+                    section3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+        
         // Timeline data
         const timelineData = [
             {
-                time: '06:00',
-                title: 'The energy boost<br>in the morning.',
-                description: 'The full-spectrum daylight lamp that can be switched on at the front is a real wake-up call. With an effect of up to 10,000 lux, you reactivate your bodily functions for more vitality, wakefulness and concentration.',
+                time: '1953',
+                title: 'The Young Queen',
+                description: 'At age 27, Elizabeth II ascended to the throne. Her first portrait on Canadian coins showed a youthful monarch wearing the Girls of Great Britain and Ireland Tiara, symbolizing the dawn of a new Elizabethan age.',
                 description2: null,
                 bgColor: '#f5f5f5',
                 dotClass: '',
@@ -921,9 +921,9 @@
                 images: ['#e8e8e8', '#d8d8d8']
             },
             {
-                time: '09:00',
-                title: 'Full light. Full focus.',
-                description: 'The downward desk illumination provides wide-area illumination with linear, shadow-free light. For effortless work with documents or on the monitor.',
+                time: '1965',
+                title: 'Mature Majesty',
+                description: 'The second portrait captured the Queen at 39, reflecting her growing confidence and experience. This image appeared on coins during a transformative period of Canadian history.',
                 description2: null,
                 bgColor: '#f5f5f5',
                 dotClass: '',
@@ -931,9 +931,9 @@
                 images: ['#d5d5d5', '#e5e5e5']
             },
             {
-                time: '15:00',
-                title: 'Sets the scene perfectly.',
-                description: 'The switchable, frontal light function acts like a soft box and creates a natural brightening of the area around the face. For a perfect appearance in video conferences!',
+                time: '1990',
+                title: 'Timeless Grace',
+                description: 'The third portrait depicted the Queen wearing the Diamond Diadem, showcasing the dignity and grace of a monarch who had served for nearly four decades.',
                 description2: null,
                 bgColor: '#f5f5f5',
                 dotClass: '',
@@ -941,10 +941,10 @@
                 images: ['#c8c8c8', '#d0d0d0']
             },
             {
-                time: '23:00',
-                title: 'Healthy sleep.<br>Ideal regeneration.',
-                description: 'In the evening, the light from HEAVN One becomes warmer and stimulates the production of the sleep hormone melatonin in your body.',
-                description2: 'The result is healthy sleep - the best foundation for sustainable performance at work.',
+                time: '2003',
+                title: 'A Lasting Legacy',
+                description: 'The final portrait on Canadian coins showed Queen Elizabeth II in her later years, celebrating her Golden Jubilee. This image would grace coins until her passing in 2022.',
+                description2: 'Together, these four portraits chronicle seventy years of dedicated service, making Queen Elizabeth II an enduring symbol of stability and continuity.',
                 bgColor: '#1a1a1a',
                 dotClass: 'white',
                 showCTA: true,
@@ -985,14 +985,27 @@
         window.addEventListener('scroll', () => {
             const header = document.getElementById('header');
             const scrollPos = window.scrollY;
+            const section1 = document.querySelector('.section-1');
             const section3 = document.querySelector('.section-3');
+            const section4 = document.getElementById('timelineSection');
+            
+            const section1Bottom = section1.offsetTop + section1.offsetHeight;
             const section3Top = section3.offsetTop;
             const section3Bottom = section3Top + section3.offsetHeight;
-            const section4 = document.getElementById('timelineSection');
             const section4Top = section4.offsetTop;
 
-            // Header color
-            if (scrollPos >= section3Top - 100 && scrollPos < section4Top - 100) {
+            // Show/hide header based on scroll position
+            // Hide header when on title page (Section 1)
+            if (scrollPos < section1Bottom - 100) {
+                header.classList.remove('visible');
+            } else {
+                header.classList.add('visible');
+            }
+
+            // Header color based on section
+            // Section 1 (white) and Section 3 (white) use light header (dark text)
+            // Section 4 timeline changes based on time
+            if (scrollPos < section1Bottom || (scrollPos >= section3Top - 100 && scrollPos < section4Top - 100)) {
                 header.classList.remove('dark');
                 header.classList.add('light');
             } else {
@@ -1049,7 +1062,7 @@
             if (data.showCTA) {
                 html += `
                     <div class="timeline-cta">
-                        <button class="cta-button">Order now</button>
+                        <button class="cta-button">Explore the Collection</button>
                     </div>
                 `;
             }
