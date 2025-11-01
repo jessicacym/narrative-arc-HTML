@@ -742,7 +742,7 @@
                 <!-- Left page (hidden initially, shows after opening) -->
                 <div class="page-left">
                     <div class="page-image-container">
-                        <img src="屏幕截图_2025-10-30_191509.png" alt="Queen Elizabeth II Coronation">
+                        <img src="1（2）.png" alt="Queen Elizabeth II Coronation">
                     </div>
                 </div>
 
@@ -754,7 +754,7 @@
                     <!-- Front cover -->
                     <div class="cover-front">
                         <div class="queen-portrait">
-                            <img src="Queen_Elizabeth_II_official_portrait_for_1959_tour__retouched__1.png" alt="Queen Elizabeth II">
+                            <img src="2.png" alt="Queen Elizabeth II">
                         </div>
                         <div class="cover-title">Queen</div>
                         <div class="cover-main-title">Elizabeth<br>II</div>
@@ -763,7 +763,7 @@
                     <!-- Back of cover (inside page) -->
                     <div class="cover-back">
                         <div class="page-image-container">
-                            <img src="Image_20251030190515.png" alt="Queen Elizabeth II with Attendants">
+                            <img src="3.png" alt="Queen Elizabeth II with Attendants">
                         </div>
                     </div>
                 </div>
