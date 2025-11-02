@@ -655,6 +655,26 @@
         .section-4 {
             background: #f5f5f5;
             transition: background 0.6s ease;
+            position: relative;
+        }
+
+        .section-4::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        .section-4.has-background::before {
+            opacity: 0.5;
         }
 
         .section-4.dark {
@@ -760,6 +780,50 @@
             margin-bottom: 20px;
         }
 
+        /* Special styling for 1953 timeline */
+        .timeline-special-header {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .timeline-special-subtitle {
+            font-size: 26px;
+            font-style: italic;
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .timeline-special-text {
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .timeline-coins-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            align-items: center;
+        }
+
+        .timeline-coin-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-coin-caption {
+            font-size: 13px;
+            line-height: 1.6;
+            opacity: 0.8;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
         .timeline-cta {
             margin-top: 40px;
         }
@@ -826,7 +890,6 @@
         <!-- Header -->
         <header class="header light" id="header">
             <div class="logo">ELIZABETH II</div>
-            <button class="order-btn">Explore More</button>
         </header>
 
         <!-- Section 1: Title Page -->
@@ -936,14 +999,21 @@
         // Timeline data
         const timelineData = [
             {
-                time: '1953',
-                title: 'The Young Queen',
-                description: 'At age 27, Elizabeth II ascended to the throne. Her first portrait on Canadian coins showed a youthful monarch wearing the Girls of Great Britain and Ireland Tiara, symbolizing the dawn of a new Elizabethan age.',
-                description2: null,
-                bgColor: '#f5f5f5',
-                dotClass: '',
+                time: '1953-1964',
+                title: 'YOUTH & CORONATION',
+                subtitle: 'A New Reign Begins',
+                description: 'At 25, Queen Elizabeth II\'s youthful portrait appeared on Canadian coins, wearing a classical laurel wreath is symbolized hope and optimism.',
+                description2: 'During the post-war boom, these coins circulated everywhere, people could buy coffee, bus tickets, and newspapers - making her face the most touched image in Canada.',
+                description3: 'Metal was memory, and Canadians carried the Queen in their pockets every single day.',
+                coinCaption: '25 Cents Elizabeth II (1953-1964) Canada Silver Coin.<br>*The back of the coin featured Canada\'s caribou (a type of deer), which has been used since 1937',
+                bgColor: '#2a2520',
+                bgImage: '7.png',
+                dotClass: 'white',
                 showCTA: false,
-                images: ['#e8e8e8', '#d8d8d8']
+                showCoins: true,
+                coinImages: ['8.png', '9.png'],
+                images: ['7.png'],
+                isSpecial: true
             },
             {
                 time: '1965',
@@ -985,10 +1055,19 @@
         function initializeImages() {
             const container = document.getElementById('timelineImages');
             timelineData.forEach((data, index) => {
-                data.images.forEach((color, imgIndex) => {
+                data.images.forEach((imageSource, imgIndex) => {
                     const div = document.createElement('div');
                     div.className = 'timeline-image';
-                    div.style.background = color;
+                    
+                    // Check if it's a URL or a color
+                    if (imageSource.startsWith('#')) {
+                        div.style.background = imageSource;
+                    } else {
+                        div.style.backgroundImage = `url('${imageSource}')`;
+                        div.style.backgroundSize = 'cover';
+                        div.style.backgroundPosition = 'center';
+                    }
+                    
                     div.dataset.index = index;
                     div.dataset.imgIndex = imgIndex;
                     container.appendChild(div);
@@ -1068,28 +1147,75 @@
             // Update background
             const section = document.getElementById('timelineSection');
             section.style.background = data.bgColor;
-            if (data.bgColor === '#1a1a1a') {
+            
+            // Update background image
+            if (data.bgImage) {
+                section.style.setProperty('--bg-image', `url('${data.bgImage}')`);
+                section.classList.add('has-background');
+                const beforeElement = section.querySelector('::before') || section;
+                section.style.setProperty('background-image', 'none');
+                const style = document.createElement('style');
+                style.textContent = `#timelineSection::before { background-image: url('${data.bgImage}') !important; }`;
+                document.head.appendChild(style);
+            } else {
+                section.classList.remove('has-background');
+            }
+            
+            // Update dark/light mode
+            if (data.bgColor === '#1a1a1a' || data.bgColor === '#2a2520') {
                 section.classList.add('dark');
             } else {
                 section.classList.remove('dark');
             }
 
-            // Update content
-            let html = `
-                <h3 class="timeline-title">${data.title}</h3>
-                <p class="timeline-description">${data.description}</p>
-            `;
-
-            if (data.description2) {
-                html += `<p class="timeline-description">${data.description2}</p>`;
-            }
-
-            if (data.showCTA) {
-                html += `
-                    <div class="timeline-cta">
-                        <button class="cta-button">Explore the Collection</button>
-                    </div>
+            // Update content - check if special layout
+            let html = '';
+            
+            if (data.isSpecial) {
+                // Special layout for 1953
+                html = `
+                    <h3 class="timeline-special-header">${data.title}</h3>
+                    <p class="timeline-special-subtitle">${data.subtitle}</p>
+                    <p class="timeline-special-text">${data.description}</p>
                 `;
+                
+                if (data.description2) {
+                    html += `<p class="timeline-special-text">${data.description2}</p>`;
+                }
+                
+                if (data.description3) {
+                    html += `<p class="timeline-special-text">${data.description3}</p>`;
+                }
+                
+                if (data.showCoins && data.coinImages) {
+                    html += `<div class="timeline-coins-container">`;
+                    data.coinImages.forEach(img => {
+                        html += `<img src="${img}" alt="Coin" class="timeline-coin-image">`;
+                    });
+                    html += `</div>`;
+                }
+                
+                if (data.coinCaption) {
+                    html += `<p class="timeline-coin-caption">${data.coinCaption}</p>`;
+                }
+            } else {
+                // Normal layout
+                html = `
+                    <h3 class="timeline-title">${data.title}</h3>
+                    <p class="timeline-description">${data.description}</p>
+                `;
+
+                if (data.description2) {
+                    html += `<p class="timeline-description">${data.description2}</p>`;
+                }
+
+                if (data.showCTA) {
+                    html += `
+                        <div class="timeline-cta">
+                            <button class="cta-button">Explore the Collection</button>
+                        </div>
+                    `;
+                }
             }
 
             document.getElementById('timelineContent').innerHTML = html;
