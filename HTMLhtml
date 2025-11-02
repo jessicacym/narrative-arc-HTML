@@ -1007,12 +1007,12 @@
                 description3: 'Metal was memory, and Canadians carried the Queen in their pockets every single day.',
                 coinCaption: '25 Cents Elizabeth II (1953-1964) Canada Silver Coin.<br>*The back of the coin featured Canada\'s caribou (a type of deer), which has been used since 1937',
                 bgColor: '#2a2520',
-                bgImage: '7.png',
+                bgImage: '9.png',
                 dotClass: 'white',
                 showCTA: false,
                 showCoins: true,
-                coinImages: ['8.png', '9.png'],
-                images: ['7.png'],
+                coinImages: ['8.png', '7.png'],
+                images: ['10.png'],
                 isSpecial: true
             },
             {
