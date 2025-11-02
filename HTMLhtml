@@ -674,7 +674,7 @@
         }
 
         .section-4.has-background::before {
-            opacity: 0.5;
+            opacity: 0.3;
         }
 
         .section-4.dark {
@@ -747,6 +747,9 @@
             align-items: center;
             justify-content: center;
             box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.5), 0 4px 15px rgba(0, 0, 0, 0.2);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .time-dot:hover {
@@ -755,6 +758,11 @@
 
         .time-dot.white {
             background: white;
+        }
+
+        .time-dot.has-image {
+            background: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .time-text {
@@ -1009,6 +1017,7 @@
                 bgColor: '#2a2520',
                 bgImage: '9.png',
                 dotClass: 'white',
+                dotImage: '8.png',
                 showCTA: false,
                 showCoins: true,
                 coinImages: ['8.png', '7.png'],
@@ -1140,6 +1149,15 @@
             // Update dot
             const dot = document.getElementById('timeDot');
             dot.className = 'time-dot ' + data.dotClass;
+            
+            // Update dot image if provided
+            if (data.dotImage) {
+                dot.style.backgroundImage = `url('${data.dotImage}')`;
+                dot.classList.add('has-image');
+            } else {
+                dot.style.backgroundImage = '';
+                dot.classList.remove('has-image');
+            }
             
             // Update time
             document.getElementById('timeText').textContent = data.time;
