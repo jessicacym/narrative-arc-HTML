@@ -456,12 +456,51 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             overflow: hidden;
+            position: relative;
         }
 
         .title-image-container img {
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        .title-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .title-overlay-main {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            letter-spacing: 8px;
+            margin-bottom: 180px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .title-overlay-subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            color: #ffffff;
+            text-align: center;
+            font-style: italic;
+            letter-spacing: 1px;
+            line-height: 1.6;
+            position: absolute;
+            bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: 'Playfair Display', Georgia, serif;
         }
 
         .coin-button-container {
@@ -479,36 +518,11 @@
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            background: radial-gradient(circle at 30% 30%, #f0f0f0, #c0c0c0 50%, #a0a0a0);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .coin-button::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 10%;
-            width: 80%;
-            height: 80%;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #e8e8e8, #d0d0d0 40%, #b8b8b8);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .coin-button::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
             background-image: url('4.png');
             background-size: cover;
             background-position: center;
-            border-radius: 50%;
-            opacity: 0.4;
+            position: relative;
+            overflow: hidden;
         }
 
         .coin-button:hover {
@@ -810,6 +824,10 @@
         <section class="section-1" id="section1">
             <div class="title-image-container">
                 <img src="5.png" alt="From Metal to Memory - Queen Elizabeth II">
+                <div class="title-overlay">
+                    <div class="title-overlay-main">FROM METAL TO MEMORY</div>
+                    <div class="title-overlay-subtitle">Four portraits, seventy years, one legacy engraved in Canada's coins.</div>
+                </div>
             </div>
             <div class="coin-button-container">
                 <button class="coin-button" id="coinButton" aria-label="Enter the story"></button>
