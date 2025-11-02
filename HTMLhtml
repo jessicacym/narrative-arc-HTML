@@ -504,7 +504,7 @@
             transform: translate(-50%, -50%);
             width: 50px;
             height: 50px;
-            background-image: url('5.png');
+            background-image: url('4.png');
             background-size: cover;
             background-position: center;
             border-radius: 50%;
@@ -809,7 +809,7 @@
         <!-- Section 1: Title Page -->
         <section class="section-1" id="section1">
             <div class="title-image-container">
-                <img src="4.png" alt="From Metal to Memory - Queen Elizabeth II">
+                <img src="5.png" alt="From Metal to Memory - Queen Elizabeth II">
             </div>
             <div class="coin-button-container">
                 <button class="coin-button" id="coinButton" aria-label="Enter the story"></button>
