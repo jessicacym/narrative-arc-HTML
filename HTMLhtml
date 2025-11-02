@@ -1025,14 +1025,23 @@
                 isSpecial: true
             },
             {
-                time: '1965',
-                title: 'Mature Majesty',
-                description: 'The second portrait captured the Queen at 39, reflecting her growing confidence and experience. This image appeared on coins during a transformative period of Canadian history.',
-                description2: null,
-                bgColor: '#f5f5f5',
-                dotClass: '',
+                time: '1965 - 1989',
+                title: 'THE SECOND PORTRAIT',
+                subtitle: 'A Nation Changing, and So Did She',
+                description: 'Twenty-five years is a long time. By 1965, the young queen with the laurel wreath was gone. In her place: a woman at 39, wearing a simpler diamond tiara.',
+                description2: 'British sculptor Arnold Machin didn't hide what those years had carved into her face. Fine lines had begun to appear. The weight of decades, visible in millimeters.',
+                description3: 'This was no longer the hopeful monarch of the 1950s. This was a Queen who carried responsibility. And the metal changed too. In 1968, silver gave way to nickel— darker, heavier, more worn with use. ',
+                description4: 'Metal was aging. Just as she was.',
+                coinCaption: '25 Cents Elizabeth II (1965-1989) Canada Nickel Coin',
+                bgColor: '#2a2520',
+                bgImage: '9.png',
+                dotClass: 'white',
+                dotImage: '12.png',
                 showCTA: false,
-                images: ['#d5d5d5', '#e5e5e5']
+                showCoins: true,
+                coinImages: ['13.png', '14.png'],
+                images: ['15.png'],
+                isSpecial: true
             },
             {
                 time: '1990',
