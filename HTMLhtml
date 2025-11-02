@@ -1017,7 +1017,7 @@
                 bgColor: '#2a2520',
                 bgImage: '9.png',
                 dotClass: 'white',
-                dotImage: '8.png',
+                dotImage: '11.png',
                 showCTA: false,
                 showCoins: true,
                 coinImages: ['8.png', '7.png'],
